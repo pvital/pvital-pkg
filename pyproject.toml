@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pvital-pkg"
+dynamic = [
+    "version",
+]
+authors = [
+  { name="Paulo Vital", email="pvital@pvital.dev" },
+]
+description = "A small CLI app to show current Python version."
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+dependencies = [
+    "click>=8.1",
+]
+
+[project.scripts]
+pvital-pkg = "pvital_pkg.__main__:cli"
+
+[project.urls]
+Homepage = "https://github.com/pvital/pvital-pkg"
+Issues = "https://github.com/pvital/pvital-pkg/issues"
+
+[tool.hatch.version]
+path = "src/pvital_pkg/version.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    # "/tests",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pvital_pkg"]
