@@ -47,3 +47,9 @@ include = [
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pvital_pkg"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.3.3",
+    "ruff>=0.7.0",
+]
