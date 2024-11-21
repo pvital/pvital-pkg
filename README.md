@@ -12,10 +12,10 @@ $ pip install pvital-pkg
 
 ```bash
 $ pvital-pkg
-Hello, World! You are using Python 3.8.18!
+Hello, World! You are using Python 3.13.0!
 
 $ pvital-pkg --version
-pvital-pkg, version 0.0.5
+pvital-pkg, version 0.1.0
 ```
 
 
