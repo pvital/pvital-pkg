@@ -23,7 +23,7 @@ jobs:
         run: echo "VERSION=$(grep "^__version__"  src/pvital_pkg/version.py | cut -d "=" -f 2 | xargs)" >> $GITHUB_ENV
       - name: Check source version with tagged version
         run: |
-          if [ $VERSION != ${{ github.ref_name }}]
+          if [ 'v$VERSION' != ${{ github.ref_name }} ]
             echo "::error title=MISMATCH VERSIONS::The src version ($VERSION) is different from tag version(${{ github.ref_name }})."
             exit 1
     
