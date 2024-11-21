@@ -15,7 +15,7 @@ $ pvital-pkg
 Hello, World! You are using Python 3.13.0!
 
 $ pvital-pkg --version
-pvital-pkg, version 0.1.0
+pvital-pkg, version 0.2.0
 ```
 
 
