@@ -26,6 +26,7 @@ jobs:
           if [ $VERSION != ${{ github.ref_name }} ]
             echo "::error title=MISMATCH VERSIONS::The src version ($VERSION) is different from tag version(${{ github.ref_name }})."
             exit 1
+          fi
     
   build:
     name: Build package
