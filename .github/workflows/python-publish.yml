@@ -20,10 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Get source version
-        run: echo "VERSION=$(grep "^__version__"  src/pvital_pkg/version.py | cut -d "=" -f 2 | xargs)" >> $GITHUB_ENV
+        run: echo "VERSION=v$(grep "^__version__" src/pvital_pkg/version.py | cut -d "=" -f 2 | xargs)" >> $GITHUB_ENV
       - name: Check source version with tagged version
         run: |
-          if [ 'v$VERSION' != ${{ github.ref_name }} ]
+          if [ $VERSION != ${{ github.ref_name }} ]
             echo "::error title=MISMATCH VERSIONS::The src version ($VERSION) is different from tag version(${{ github.ref_name }})."
             exit 1
     
