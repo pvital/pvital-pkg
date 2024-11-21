@@ -14,25 +14,10 @@ on:
       - v0.*
 
 jobs:
-  version-check:
-    name: Check version
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Get source version
-        run: echo "VERSION=v$(grep "^__version__" src/pvital_pkg/version.py | cut -d "=" -f 2 | xargs)" >> $GITHUB_ENV
-      - name: Check source version with tagged version
-        run: |
-          if [ $VERSION != ${{ github.ref_name }} ]
-            echo "::error title=MISMATCH VERSIONS::The src version ($VERSION) is different from tag version(${{ github.ref_name }})."
-            exit 1
-          fi
-    
   build:
     name: Build package
     runs-on: ubuntu-latest
-    needs:
-      - version-check
+    if: ${{ startsWith(github.ref_name, 'v0') }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
