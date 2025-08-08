@@ -50,6 +50,8 @@ packages = ["src/pvital_pkg"]
 
 [tool.uv]
 dev-dependencies = [
+    "httpx>=0.28.1",
+    "pygithub>=2.7.0",
     "pytest>=8.3.3",
     "ruff>=0.7.0",
 ]
