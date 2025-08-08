@@ -25,22 +25,18 @@ def send_slack_message(
 
     data = {"text": message}
 
-    try:
-        with httpx.Client() as client:
-            response = client.post(url, headers=headers, json=data)
-            response.raise_for_status()
+    with httpx.Client() as client:
+        response = client.post(url, headers=headers, json=data)
+        response.raise_for_status()
 
-            result = response.text
-            if "ok" in result:
-                print("✅ Slack message sent successfully")
-                return True
-            else:
-                print(f"❌ Slack API error: {result}")
-                return False
+        result = response.text
+        if "ok" in result:
+            print("✅ Slack message sent successfully")
+        else:
+            print(f"❌ Slack API error: {result}")
+            return False
 
-    except httpx.HTTPError as e:
-        print(f"❌ Request error: {e}")
-        return False
+    return True
 
 
 def ensure_environment_variables_are_present() -> (
@@ -133,13 +129,13 @@ def main() -> None:
     # Create Slack message
     message = (
         f":mega: Oyez! Oyez! Oyez!\n"
-        f"Hello Team. Please, review the opened PR #{pr_number} in {repo_name}\n"
+        f"Hello Team. Please, review the opened PR #{pr_number} in *{repo_name}*\n"
         f"*{pr_title}* by @{pr_author}\n"
         f":pr-opened: {pr_url}"
     )
 
     # Send to Slack
-    success = send_slack_message(slack_service, slack_team, slack_token, message)
+    success = send_slack_message(slack_team, slack_service, slack_token, message)
 
     if not success:
         sys.exit(1)
