@@ -5,7 +5,7 @@ A small CLI app to show current Python version.
 ## Installation
 
 ```bash
-$ pip install pvital-pkg
+$ pip install -i https://test.pypi.org/simple/ pvital-pkg
 ```
 
 ## A Simple Example
