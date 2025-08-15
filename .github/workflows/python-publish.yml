@@ -82,3 +82,47 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
+
+  notify-slack:
+    name: Notify on Slack
+    needs:
+      - github-release
+      - publish-to-testpypi
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history to access commit messages
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          pip install httpx PyGithub
+
+      # Set environment variables safely
+      - name: Set event name
+        id: set-event-name
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: echo "EVENT_NAME=$EVENT_NAME" >> $GITHUB_ENV
+
+      # Send notification using the safely set environment variables
+      - name: Send Slack notification
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_RELEASE_TAG: ${{ github.ref_name }}
+          SLACK_TOKEN: ${{ secrets.SLACK_WEBHOOK_PR_TOKEN }}
+          SLACK_SERVICE: ${{ secrets.SLACK_WEBHOOK_PR_SERVICE }}
+          SLACK_TEAM: ${{ secrets.SLACK_WEBHOOK_PR_TEAM }}
+        run: |
+          echo "New release published ${GITHUB_RELEASE_TAG}"
+          python .github/scripts/announce_release_on_slack.py
+  
