@@ -17,7 +17,7 @@ jobs:
   build:
     name: Build package
     permissions:
-      contents: write
+      contents: read
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.ref_name, 'v0') }}
     steps:
